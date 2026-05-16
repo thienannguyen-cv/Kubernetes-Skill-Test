@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: huge-request
+  namespace: skill-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: huge-request
+  template:
+    metadata:
+      labels:
+        app: huge-request
+    spec:
+      containers:
+        - name: app
+          image: nginx
+          resources:
+            requests:
+              memory: "100Gi"
+              cpu: "16"

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wrong-selector-app
+  namespace: skill-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: right-label
+  template:
+    metadata:
+      labels:
+        app: right-label
+    spec:
+      containers:
+        - name: app
+          image: nginx
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wrong-selector-svc
+  namespace: skill-lab
+spec:
+  selector:
+    app: wrong-label
+  ports:
+    - port: 80
+      targetPort: 80
